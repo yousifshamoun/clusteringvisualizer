@@ -1,3 +1,5 @@
+import { ReactElement } from "react"
+
 export interface GlobalState {
     points: Point[],
     max_id: number,
@@ -5,6 +7,7 @@ export interface GlobalState {
     started: boolean,
     paused: boolean,
     delay: number,
+    render: ReactElement[]
 }
 export interface Point {
     id: number,
@@ -16,7 +19,8 @@ export const initialState: GlobalState = {
     algorithm: "kmeans",
     started: false,
     paused: false,
-    delay: 100
+    delay: 100,
+    render: []
 }
 export interface Action {
     type: string,
@@ -32,6 +36,10 @@ function global(state: GlobalState = initialState, action: Action)      {
             return {...state, points: [...state.points, ...action.payload]}
         case "INCREMENT_MAX_ID":
             return {...state, max_id: state.max_id + 1}
+        case "ADD_TO_RENDER":
+            return {...state, render: [...state.render, action.payload]}
+        case "APPEND_TO_RENDER":
+            return {...state, render: [...state.render, ...action.payload] }
         default:
             return initialState
     }

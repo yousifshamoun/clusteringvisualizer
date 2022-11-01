@@ -1,8 +1,9 @@
 import store from "../reduxStore";
 function kMeans(): void {
     store.dispatch({type: "ADD_TO_RENDER",
-     payload: <svg><g key={100}>
+     payload: <svg key={100}><g key={101}>
         <circle
+        key={102}
         cx={600}
         cy={200}
         r={25}

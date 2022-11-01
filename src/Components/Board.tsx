@@ -4,7 +4,6 @@ import { connect, ConnectedProps } from 'react-redux';
 import {Point} from "../reduxStore/reducers/global"
 const mapStateToProps = (state: RootState) => ({
     global: state.global,
-    algorithm: state.algorithm
 }
 )
 const mapDispathToProps = {
@@ -70,7 +69,7 @@ class Board extends React.Component<IBoardProps, BoardProps> {
                             />
                         </g>
                     ))}
-                    {this.props.algorithm.render}
+                    {this.props.global.render}
                     </svg>
             </div>
         )
