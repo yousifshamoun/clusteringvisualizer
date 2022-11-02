@@ -2,9 +2,13 @@ import store from "../reduxStore";
 import { Point } from "../reduxStore/reducers/global";
 import getRandomColor from "../utils/getRandomColor";
 import getSquareDistance from "../utils/getSquareDistance"
-function kMeans(): void {
+import { v4 as uuidv4 } from 'uuid';
+async function kMeans() {
+    /**DECLARING INSTANCE VARIABLES */
     const points: Point[] = store.getState().global.points
     const colors: string[] = []
+    const delay: number = 1000
+    /**DECLARING HELPER METHODS */
     function getRandomCentroids(points: Point[], k: number) : Point[] {
         if (points.length <= k) {
             return [];
@@ -40,45 +44,123 @@ function kMeans(): void {
         }
         return clusters
       }
-
-    const centroids = getRandomCentroids(points, 2)
+    const getVariance = (clusters: Point[][]) : number => {
+        let variance: number = 0 
+        for (let i = 0; i < clusters.length; i += 1) {
+            for (let j = 0; j < clusters[i].length; j += 1) {
+                variance += getSquareDistance(centroids[i], clusters[i][j])
+            }
+        }
+        return variance
+    }
+    const getOptimizedCentroids = (clusters: Point[][]) : Point[] => {
+        const optimizedCentroids: Point[] = []
+        for (let i = 0; i < clusters.length; i += 1) {
+            let X = 0 
+            let Y = 0
+            for (let j = 0; j < clusters[i].length; j += 1) {
+                X += clusters[i][j].coordinates[0]
+                Y += clusters[i][j].coordinates[1]
+            }
+            X /= clusters[i].length
+            Y /= clusters[i].length
+            optimizedCentroids.push({id: centroids[i].id, coordinates: [X,Y]})
+        }
+        return optimizedCentroids
+    }
+    let centroids = getRandomCentroids(points, 2)
     for (let i = 0; i < centroids.length; i += 1) {
         colors.push(getRandomColor())
     }
-const clusters = getClusters(centroids, points)
-for (let i = 0; i < clusters.length; i += 1) {
-    for (let j = 0; j < clusters[i].length; j += 1) {
-        store.dispatch({type: "ADD_TO_RENDER",
+    /** DISPATCHING TO THE STORE BEGINS HERE */
+    while (true) {
+        for (let i = 0; i < points.length + centroids.length; i += 1) {
+            store.dispatch({type:"POP_FROM_RENDER_SEC"})
+        }
+        for (let i = 0; i < centroids.length; i += 1) {
+            store.dispatch({type: "ADD_TO_RENDER_PRIM",
         payload: 
-        <g key={j.toString() + i.toString()}>
-            <circle
-                cx={clusters[i][j].coordinates[0]}
-                cy={clusters[i][j].coordinates[1]}
-                r={9}
-                style={{ fill: colors[i]}}
-                stroke="black"
-                strokeWidth="1"
+        <g key = {uuidv4()}>
+            <rect
+                x={centroids[i].coordinates[0] - 10}
+                y={centroids[i].coordinates[1] - 10}
+                width={30}
+                height="20"
+                fill = {colors[i]}
+                strokeWidth="0.25"
             />
+            <text x={centroids[i].coordinates[0] - 7} y={centroids[i].coordinates[1] + 7} style={{ fill: 'white' }}>
+                C{i + 1}
+            </text>
         </g>
-    })
+        })
+        }
+    const clusters = getClusters(centroids, points)
+    const previous_variance  = getVariance(clusters)
+    await new Promise((res) => setTimeout(res, delay))
+    store.dispatch({type: "RESET_RENDER_SEC"})
+    for (let i = 0; i < clusters.length; i += 1) {
+        for (let j = 0; j < clusters[i].length; j += 1) {
+            store.dispatch({type: "ADD_TO_RENDER_SEC",
+            payload: 
+            <g key={uuidv4()}>
+                <circle
+                    cx={clusters[i][j].coordinates[0]}
+                    cy={clusters[i][j].coordinates[1]}
+                    r={9}
+                    style={{ fill: colors[i]}}
+                    stroke="black"
+                    strokeWidth="1"
+                />
+            </g>
+        })
+        store.dispatch({type: "ADD_TO_RENDER_SEC",
+            payload: 
+                <g 
+                key = {uuidv4()}>
+                    <line
+                    x1 = {centroids[i].coordinates[0]}
+                    y1 = {centroids[i].coordinates[1]}
+                    x2 = {clusters[i][j].coordinates[0]}
+                    y2 = {clusters[i][j].coordinates[1]}
+                    stroke = {colors[i]}
+                    strokeWidth="2.5"
+                    />
+                </g>
+        })
+        }
     }
-}
-for (let i = 0; i < centroids.length; i += 1) {
-    store.dispatch({type: "ADD_TO_RENDER",
-    payload: 
-    <g key = {centroids[i].id}>
-        <rect
-            x={centroids[i].coordinates[0] - 10}
-            y={centroids[i].coordinates[1] - 10}
-            width={30}
-            height="20"
-            fill = {colors[i]}
-            strokeWidth="0.25"
-        />
-        <text x={centroids[i].coordinates[0] - 7} y={centroids[i].coordinates[1] + 7} style={{ fill: 'white' }}>
-            C{i + 1}
-        </text>
-    </g>
-    })}
+    const optimizedCentroids = getOptimizedCentroids(clusters)
+    const tempClusters = getClusters(optimizedCentroids, points)
+    const current_variance = getVariance(tempClusters)
+    if ((centroids[0].coordinates[0].toString() + centroids[0].coordinates[1].toString()) === (
+        optimizedCentroids[0].coordinates[0].toString() + optimizedCentroids[0].coordinates[1].toString())) {
+        console.log(":)")
+        break
+    }
+    await new Promise((res) => setTimeout(res, delay))
+    for (let i = 0; i < centroids.length; i += 1) {
+        store.dispatch({type: "ADD_TO_RENDER_SEC",
+            payload: 
+                <g 
+                key = {uuidv4()}>
+                    <line
+                    x1 = {centroids[i].coordinates[0]}
+                    y1 = {centroids[i].coordinates[1]}
+                    x2 = {optimizedCentroids[i].coordinates[0]}
+                    y2 = {optimizedCentroids[i].coordinates[1]}
+                    stroke="red"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeDasharray="8"
+                    style={{ markerEnd: 'url(#markerArrow)'}}
+                    />
+                </g>
+        })
+    }
+    await new Promise((res) => setTimeout(res, delay))
+    store.dispatch({type: "RESET_RENDER_PRIM"})
+    centroids = optimizedCentroids
+    }
 }
 export default kMeans

@@ -55,6 +55,11 @@ class Board extends React.Component<IBoardProps, BoardProps> {
                     height="90vh"
                     ref={this.state.bg}
                     onClick={this.handleClick}>
+                        <defs>
+                        <marker id="markerArrow" markerWidth="20" markerHeight="20" refX="10" refY="6" orient="auto">
+                            <path d="M2,2 L2,11 L10,6 L2,2" fill="red" />
+                        </marker>
+                        </defs>
                         {this.props.global.points.map((o: Point) => (
                         <g
                             key={o.id}
@@ -69,7 +74,8 @@ class Board extends React.Component<IBoardProps, BoardProps> {
                             />
                         </g>
                     ))}
-                    {this.props.global.render}
+                    {this.props.global.render_primary}
+                    {this.props.global.render_secondary}
                     </svg>
             </div>
         )
