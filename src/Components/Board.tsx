@@ -32,7 +32,7 @@ class Board extends React.Component<IBoardProps, BoardProps> {
             bg: React.createRef()
         }
     }
-    handleClick = (event:  React.MouseEvent<SVGSVGElement>) => {
+    handleClick = (event: React.MouseEvent<SVGSVGElement>) => {
         // if (this.props.global.started) {
         //     return
         // }
@@ -40,7 +40,7 @@ class Board extends React.Component<IBoardProps, BoardProps> {
         const X = event.clientX - target.getBoundingClientRect().left;
         const Y = event.clientY - target.getBoundingClientRect().top;
 
-        if (window.innerWidth - 30 <= X || window.innerHeight - 70 <= Y || 20 >= X || 20 >= Y || !X || !Y ) {
+        if (this.props.global.started || window.innerWidth - 30 <= X || window.innerHeight - 70 <= Y || 20 >= X || 20 >= Y || !X || !Y ) {
             return
         }
         this.props.addPoint({id: this.props.global.max_id, coordinates: [X, Y]})

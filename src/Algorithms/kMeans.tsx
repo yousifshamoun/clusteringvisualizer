@@ -3,6 +3,7 @@ import { Point } from "../reduxStore/reducers/global";
 import getRandomColor from "../utils/getRandomColor";
 import getSquareDistance from "../utils/getSquareDistance"
 import { v4 as uuidv4 } from 'uuid';
+import handlePause from "../utils/handlePause"
 async function kMeans() {
     /**DECLARING INSTANCE VARIABLES */
     const points: Point[] = store.getState().global.points
@@ -68,6 +69,7 @@ async function kMeans() {
         }
         return optimizedCentroids
     }
+    store.dispatch({type: "DISABLE_START"})
     let centroids = getRandomCentroids(points, 2)
     for (let i = 0; i < centroids.length; i += 1) {
         colors.push(getRandomColor())
@@ -97,6 +99,7 @@ async function kMeans() {
         }
     const clusters = getClusters(centroids, points)
     const previous_variance  = getVariance(clusters)
+    await new Promise(handlePause)
     await new Promise((res) => setTimeout(res, delay))
     store.dispatch({type: "RESET_RENDER_SEC"})
     for (let i = 0; i < clusters.length; i += 1) {
@@ -138,6 +141,7 @@ async function kMeans() {
         console.log(":)")
         break
     }
+    await new Promise(handlePause)
     await new Promise((res) => setTimeout(res, delay))
     for (let i = 0; i < centroids.length; i += 1) {
         store.dispatch({type: "ADD_TO_RENDER_SEC",
@@ -158,9 +162,11 @@ async function kMeans() {
                 </g>
         })
     }
+    await new Promise(handlePause)
     await new Promise((res) => setTimeout(res, delay))
     store.dispatch({type: "RESET_RENDER_PRIM"})
     centroids = optimizedCentroids
     }
+    store.dispatch({type: "DISABLE_START"})
 }
 export default kMeans

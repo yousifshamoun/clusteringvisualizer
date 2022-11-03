@@ -32,6 +32,8 @@ function global(state: GlobalState = initialState, action: Action) {
     switch(action.type) {
         case "SET_ALGORITHM":
             return {...state, algorithm: action.payload}
+        case "DISABLE_START":
+            return {...state, started: !state.started}
         case "ADD_POINT":
             return {...state, points: [...state.points, action.payload]}
         case "APPEND_POINTS":
@@ -49,6 +51,8 @@ function global(state: GlobalState = initialState, action: Action) {
         case "POP_FROM_RENDER_SEC":
             state.render_primary.pop()
             return {...state, render_primary: state.render_primary}
+        case "PAUSE_RENDER":
+            return {...state, paused: !state.paused}
         default:
             return initialState
     }
