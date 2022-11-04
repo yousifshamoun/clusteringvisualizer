@@ -2,11 +2,11 @@ import React from "react"
 import {AppBar, Button, Typography,Stack, Box} from '@mui/material';
 import kMeans from "../Algorithms/kMeans" 
 import store from "../reduxStore";
-import naiveRandom from "../Algorithms/naiveRandom";
-import clusterRandom from "../Algorithms/clusterRandom";
+import RandomMenu from "./RandomMenu";
 import SpeedController from './SpeedController';
 import { RootState } from "../reduxStore/reducers/index"
 import { connect, ConnectedProps } from 'react-redux';
+import linearRandom from "../Algorithms/linearRandom";
 const mapState = (state: RootState) => ({
     global: state.global
 })
@@ -28,11 +28,11 @@ class NavBar extends React.Component<PropsFromRedux> {
     public render() {
     return (
     <AppBar position="static">
-        <Typography
+        {/* <Typography
         variant="h6"
         mt={2}
         ml={2}
-        mb={2}>Clustering Visualizer</Typography>
+        mb={2}>Clustering Visualizer</Typography> */}
 
         <Box sx={{ width: 500 }}>
             <Stack direction="row" spacing={2}>
@@ -43,8 +43,7 @@ class NavBar extends React.Component<PropsFromRedux> {
                     <Button variant='contained' onClick={this.props.pause}>Pause</Button>}
                 <Button variant="contained"
                     onClick={kMeans}>kMeans</Button>
-                <Button variant="contained"
-                    onClick={clusterRandom}>Random</Button>
+                <RandomMenu/>
                 <SpeedController/>
             </Stack>
         </Box>

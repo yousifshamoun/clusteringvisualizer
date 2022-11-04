@@ -1,15 +1,16 @@
 import store from "../reduxStore";
 
-const clusterRandom = async () => {
+const linearRandom = async () => {
     const clusterSites: number = 4
-    const clusterRadius: number = 50
+    const xOffset: number = 60  
+    const yOffset: number = 200
     for (let i = 0; i < clusterSites; i += 1) {
         let flag = true
         let X = Math.floor(Math.random() * window.innerWidth)
         let Y = Math.floor(Math.random() * window.innerHeight)
         while (flag) {
-            if (X > (window.innerWidth * 0.8) || X < (window.innerWidth * 0.2) ||
-            Y > (window.innerHeight * 0.8) || Y < (window.innerHeight * 0.2)) {
+            if (X > (window.innerWidth * 0.7) || X < (window.innerWidth * 0.3) ||
+            Y > (window.innerHeight * 0.7) || Y < (window.innerHeight * 0.3)) {
                 X = Math.floor(Math.random() * window.innerWidth)
                 Y = Math.floor(Math.random() * window.innerHeight)
             } else {
@@ -24,11 +25,11 @@ const clusterRandom = async () => {
             let cX = X
             let cY = Y
             if (positive) {
-                cX += Math.floor(Math.random() * clusterRadius)
-                cY += Math.floor(Math.random() * clusterRadius)
+                cX += Math.floor(Math.random() * xOffset)
+                cY += Math.floor(Math.random() * yOffset)
             } else {
-                cX -= Math.floor(Math.random() * clusterRadius)
-                cY -= Math.floor(Math.random() * clusterRadius)
+                cX -= Math.floor(Math.random() * xOffset)
+                cY -= Math.floor(Math.random() * yOffset)
             }
             store.dispatch({type: "ADD_POINT", payload: {id: store.getState().global.max_id, coordinates: [cX, cY]}})
             store.dispatch({type: "INCREMENT_MAX_ID"})
@@ -39,4 +40,4 @@ const clusterRandom = async () => {
 
 
 }
-export default clusterRandom
+export default linearRandom
