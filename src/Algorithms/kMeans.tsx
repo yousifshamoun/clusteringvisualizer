@@ -49,15 +49,6 @@ async function kMeans() {
         }
         return clusters
       }
-    const getVariance = (clusters: Point[][]) : number => {
-        let variance: number = 0 
-        for (let i = 0; i < clusters.length; i += 1) {
-            for (let j = 0; j < clusters[i].length; j += 1) {
-                variance += getSquareDistance(centroids[i], clusters[i][j])
-            }
-        }
-        return variance
-    }
     const getOptimizedCentroids = (clusters: Point[][]) : Point[] => {
         const optimizedCentroids: Point[] = []
         for (let i = 0; i < clusters.length; i += 1) {
@@ -69,7 +60,7 @@ async function kMeans() {
             }
             X /= clusters[i].length
             Y /= clusters[i].length
-            optimizedCentroids.push({id: centroids[i].id, coordinates: [X,Y]})
+            optimizedCentroids.push({id: centroids[i].id, coordinates: X > 20 && Y > 20 ? [X,Y] : centroids[i].coordinates})
         }
         return optimizedCentroids
     }
