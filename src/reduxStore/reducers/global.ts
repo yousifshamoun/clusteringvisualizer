@@ -4,6 +4,7 @@ export interface GlobalState {
     points: Point[],
     max_id: number,
     algorithm: string,
+    k: number
     started: boolean,
     paused: boolean,
     delay: number,
@@ -18,6 +19,7 @@ export const initialState: GlobalState = {
     points: [],
     max_id: 0,
     algorithm: "kmeans",
+    k: 2,
     started: false,
     paused: false,
     delay: 250,
@@ -59,6 +61,10 @@ function global(state: GlobalState = initialState, action: Action) {
             return {...state, paused: false}
         case "SET_DELAY":
             return {...state, delay: action.payload}
+        case "CHANGE_NUMBER_OF_CENTROIDS":
+            return {...state, k: action.payload}
+        case "RESET":
+            return initialState
         default:
             return initialState
     }

@@ -3,13 +3,15 @@ import { Point } from "../reduxStore/reducers/global";
 import getRandomColor from "../utils/getRandomColor";
 import getSquareDistance from "../utils/getSquareDistance"
 import { v4 as uuidv4 } from 'uuid';
-import handlePause from "../utils/handlePause"
+import handlePause from "../utils/handlePause";
+import {GlobalState} from "../reduxStore/reducers/global"
 async function kMeans() {
     /**DECLARING INSTANCE VARIABLES */
     const points: Point[] = store.getState().global.points
+    const k: number = store.getState().global.k
     const colors: string[] = []
     const delay: number = store.getState().global.delay
-    let centroids = getRandomCentroids(points, 4)
+    let centroids = getRandomCentroids(points, k)
     for (let i = 0; i < centroids.length; i += 1) {
         colors.push(getRandomColor())
     }
@@ -74,6 +76,9 @@ async function kMeans() {
         return flag;
     }
     /** DISPATCHING TO THE STORE BEGINS HERE */
+    if (k >= points.length) {
+        return
+    } 
     store.dispatch({type: "START"})
     store.dispatch({type: "RESET_RENDER_PRIM"})
     store.dispatch({type: "RESET_RENDER_SEC"})

@@ -2,15 +2,15 @@ import store from "../reduxStore";
 
 const linearRandom = async () => {
     const clusterSites: number = 4
-    const xOffset: number = 60  
+    const xOffset: number = 30  
     const yOffset: number = 200
     for (let i = 0; i < clusterSites; i += 1) {
         let flag = true
         let X = Math.floor(Math.random() * window.innerWidth)
         let Y = Math.floor(Math.random() * window.innerHeight)
         while (flag) {
-            if (X > (window.innerWidth * 0.7) || X < (window.innerWidth * 0.3) ||
-            Y > (window.innerHeight * 0.7) || Y < (window.innerHeight * 0.3)) {
+            if (X > (window.innerWidth * 0.9) || X < (window.innerWidth * 0.1) ||
+            Y > (window.innerHeight * 0.9) || Y < (window.innerHeight * 0.1)) {
                 X = Math.floor(Math.random() * window.innerWidth)
                 Y = Math.floor(Math.random() * window.innerHeight)
             } else {

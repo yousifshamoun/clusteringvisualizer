@@ -3,10 +3,11 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import store from '../reduxStore';
+import { GlobalState } from '../reduxStore/reducers/global';
 import naiveRandom from '../Algorithms/naiveRandom';
 import clusterRandom from '../Algorithms/clusterRandom';
 import linearRandom from '../Algorithms/linearRandom';
-export default function RandomMenu() {
+export default function RandomMenu(props: GlobalState) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -37,8 +38,9 @@ export default function RandomMenu() {
     <div>
       <Button
         id="demo-positioned-button"
-        aria-controls={open ? 'demo-positioned-menu' : undefined}
+      aria-controls={open ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
+        disabled = {props.started}
         variant="contained"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
