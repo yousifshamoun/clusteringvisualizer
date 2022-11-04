@@ -20,7 +20,7 @@ export const initialState: GlobalState = {
     algorithm: "kmeans",
     started: false,
     paused: false,
-    delay: 100,
+    delay: 250,
     render_primary: [],
     render_secondary: []
 }

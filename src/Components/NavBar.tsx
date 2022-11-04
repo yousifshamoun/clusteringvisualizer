@@ -1,13 +1,31 @@
+import React from "react"
 import {AppBar, Button, Typography,Stack, Box} from '@mui/material';
 import kMeans from "../Algorithms/kMeans" 
 import store from "../reduxStore";
 import naiveRandom from "../Algorithms/naiveRandom";
+import clusterRandom from "../Algorithms/clusterRandom";
 import SpeedController from './SpeedController';
-
-
+import { RootState } from "../reduxStore/reducers/index"
+import { connect, ConnectedProps } from 'react-redux';
+const mapState = (state: RootState) => ({
+    global: state.global
+})
+const mapDispatch = {
+    pause: () => ({
+        type: "PAUSE"
+    }),
+    resume: () => ({
+        type: "RESUME"
+    })
+}
+const connector = connect(mapState, mapDispatch)
+type PropsFromRedux = ConnectedProps<typeof connector>
 //Variables
-const NavBar = () => {
-    const paused: boolean =  store.getState().global.paused
+class NavBar extends React.Component<PropsFromRedux> {
+    constructor(props: PropsFromRedux) {
+        super(props)
+    }
+    public render() {
     return (
     <AppBar position="static">
         <Typography
@@ -18,17 +36,21 @@ const NavBar = () => {
 
         <Box sx={{ width: 500 }}>
             <Stack direction="row" spacing={2}>
-                {store.getState().global.paused ? <Button
-                variant='contained' onClick={() => {store.dispatch({type: "RESUME"})}}>Resume</Button> : <Button variant='contained' onClick={() => {store.dispatch({type: "PAUSE"})}}>Pause</Button>}
+                {this.props.global.paused ? 
+                    <Button
+                        variant='contained' onClick={this.props.resume}>Resume</Button>
+                         : 
+                    <Button variant='contained' onClick={this.props.pause}>Pause</Button>}
                 <Button variant="contained"
                     onClick={kMeans}>kMeans</Button>
                 <Button variant="contained"
-                    onClick={naiveRandom}>Random</Button>
+                    onClick={clusterRandom}>Random</Button>
                 <SpeedController/>
             </Stack>
         </Box>
     </AppBar>
     )
 }
+}
 
-export default NavBar
+export default connector(NavBar)

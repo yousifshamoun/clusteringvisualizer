@@ -9,7 +9,7 @@ async function kMeans() {
     const points: Point[] = store.getState().global.points
     const colors: string[] = []
     const delay: number = store.getState().global.delay
-    let centroids = getRandomCentroids(points, 2)
+    let centroids = getRandomCentroids(points, 4)
     for (let i = 0; i < centroids.length; i += 1) {
         colors.push(getRandomColor())
     }
@@ -127,6 +127,9 @@ async function kMeans() {
                 />
             </g>
         })
+    }}
+    for (let i = 0; i < clusters.length; i += 1) {
+        for (let j = 0; j < clusters[i].length; j += 1) {
         store.dispatch({type: "ADD_TO_RENDER_SEC",
             payload: 
                 <g 
@@ -174,5 +177,9 @@ async function kMeans() {
     centroids = optimizedCentroids
     }
     store.dispatch({type: "STOP"})
+    store.dispatch({type: "RESET_RENDER_PRIM"})
+    for (let i = 0; i < points.length; i += 1) {
+        store.dispatch({type: "POP_FROM_RENDER_SEC"})
+    }
 }
 export default kMeans

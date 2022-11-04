@@ -33,9 +33,6 @@ class Board extends React.Component<IBoardProps, BoardProps> {
         }
     }
     handleClick = (event: React.MouseEvent<SVGSVGElement>) => {
-        // if (this.props.global.started) {
-        //     return
-        // }
         const target = event.target as SVGSVGElement;
         const X = event.clientX - target.getBoundingClientRect().left;
         const Y = event.clientY - target.getBoundingClientRect().top;

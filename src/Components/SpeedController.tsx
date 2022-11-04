@@ -4,8 +4,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import store from '../reduxStore';
 export default function SpeedController() {
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const options = ["Set Speed", "Slow", "Medium", "Fast"]
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -14,15 +16,18 @@ export default function SpeedController() {
   };
   const handleSlow = () => {
     handleClose()
-    store.dispatch({type: "SET_DELAY", payload: 500})
+    setSelectedIndex(1)
+    store.dispatch({type: "SET_DELAY", payload: 1000})
   }
   const handleMedium = () => {
     handleClose()
-    store.dispatch({type: "SET_DELAY", payload: 250})
+    setSelectedIndex(2)
+    store.dispatch({type: "SET_DELAY", payload: 500})
   }
   const handleFast = () => {
     handleClose()
-    store.dispatch({type: "SET_DELAY", payload: 100})
+    setSelectedIndex(3)
+    store.dispatch({type: "SET_DELAY", payload: 250})
   }
 
   return (
@@ -36,7 +41,7 @@ export default function SpeedController() {
         onClick={handleClick}
         
       >
-        SetSpeed
+        {options[selectedIndex]}
       </Button>
       <Menu
         id="demo-positioned-menu"
