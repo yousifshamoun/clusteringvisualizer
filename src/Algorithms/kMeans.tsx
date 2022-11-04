@@ -8,7 +8,11 @@ async function kMeans() {
     /**DECLARING INSTANCE VARIABLES */
     const points: Point[] = store.getState().global.points
     const colors: string[] = []
-    const delay: number = 1000
+    const delay: number = store.getState().global.delay
+    let centroids = getRandomCentroids(points, 2)
+    for (let i = 0; i < centroids.length; i += 1) {
+        colors.push(getRandomColor())
+    }
     /**DECLARING HELPER METHODS */
     function getRandomCentroids(points: Point[], k: number) : Point[] {
         if (points.length <= k) {
@@ -69,12 +73,19 @@ async function kMeans() {
         }
         return optimizedCentroids
     }
-    store.dispatch({type: "DISABLE_START"})
-    let centroids = getRandomCentroids(points, 2)
-    for (let i = 0; i < centroids.length; i += 1) {
-        colors.push(getRandomColor())
+    const handleStoppingCondition = (oldCentroids: Point[], newCentroids: Point[]) : boolean => {
+        let flag: boolean = true;
+        for (let i = 0; i < oldCentroids.length; i += 1) {
+            if (oldCentroids[i].coordinates[0] !== newCentroids[i].coordinates[0] || oldCentroids[i].coordinates[1] !== newCentroids[i].coordinates[1]) {
+                flag = false;
+            }
+        }
+        return flag;
     }
     /** DISPATCHING TO THE STORE BEGINS HERE */
+    store.dispatch({type: "START"})
+    store.dispatch({type: "RESET_RENDER_PRIM"})
+    store.dispatch({type: "RESET_RENDER_SEC"})
     while (true) {
         for (let i = 0; i < points.length + centroids.length; i += 1) {
             store.dispatch({type:"POP_FROM_RENDER_SEC"})
@@ -98,7 +109,6 @@ async function kMeans() {
         })
         }
     const clusters = getClusters(centroids, points)
-    const previous_variance  = getVariance(clusters)
     await new Promise(handlePause)
     await new Promise((res) => setTimeout(res, delay))
     store.dispatch({type: "RESET_RENDER_SEC"})
@@ -134,12 +144,8 @@ async function kMeans() {
         }
     }
     const optimizedCentroids = getOptimizedCentroids(clusters)
-    const tempClusters = getClusters(optimizedCentroids, points)
-    const current_variance = getVariance(tempClusters)
-    if ((centroids[0].coordinates[0].toString() + centroids[0].coordinates[1].toString()) === (
-        optimizedCentroids[0].coordinates[0].toString() + optimizedCentroids[0].coordinates[1].toString())) {
-        console.log(":)")
-        break
+    if (handleStoppingCondition(centroids, optimizedCentroids)) {
+        break;
     }
     await new Promise(handlePause)
     await new Promise((res) => setTimeout(res, delay))
@@ -167,6 +173,6 @@ async function kMeans() {
     store.dispatch({type: "RESET_RENDER_PRIM"})
     centroids = optimizedCentroids
     }
-    store.dispatch({type: "DISABLE_START"})
+    store.dispatch({type: "STOP"})
 }
 export default kMeans

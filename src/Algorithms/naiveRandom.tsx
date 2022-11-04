@@ -2,7 +2,7 @@ import store from "../reduxStore";
 
 const naiveRandom = async () => {
     for (let i = 0; i < 50; i += 1) {
-    await new Promise((res) => setTimeout(res, 50))
+    await new Promise((res) => setTimeout(res, 10))
     let flag:boolean = true;
     let X = 0 
     let Y = 0 
