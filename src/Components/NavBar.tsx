@@ -1,12 +1,14 @@
 import React from "react"
 import {AppBar, Button, Typography,Stack, Box} from '@mui/material';
-import kMeans from "../Algorithms/Clustering/kMeans" 
+import kMeans from "../Algorithms/Clustering/kMeans"
+import meanShift from "../Algorithms/Clustering/meanShift";
 import store from "../reduxStore";
 import RandomMenu from "./RandomMenu";
 import SpeedController from './SpeedController';
 import { RootState } from "../reduxStore/reducers/index"
 import { connect, ConnectedProps } from 'react-redux';
 import CentroidSlider from "./CentroidSlider";
+import WindowSizeSlider from "./WindowSizeSlider";
 const mapState = (state: RootState) => ({
     global: state.global
 })
@@ -36,10 +38,9 @@ class NavBar extends React.Component<PropsFromRedux> {
         mt={2}
         ml={2}
         mb={2}>Clustering Visualizer</Typography> */}
-
         <Box sx={{ width: 1000 }}>
             <Stack direction="row" spacing={5}>
-                {this.props.global.paused ? 
+                {this.props.global.paused ?
                     <Button
                         variant='contained' onClick={this.props.resume}>Resume</Button>
                          : 
@@ -47,12 +48,18 @@ class NavBar extends React.Component<PropsFromRedux> {
                 <Button variant="contained"
                     disabled = {this.props.global.started}
                     onClick={kMeans}>kMeans</Button>
+                <Button variant="contained"
+                    disabled = {this.props.global.started}
+                    onClick={meanShift}>Mean Shift</Button>
                 <RandomMenu
                  {...this.props.global}/>
                 <SpeedController/>
-                <span>Set k clusters
+                {this.props.global.algorithm === "kmeans" ? <span>Set k clusters
                     <CentroidSlider/>
-                </span>
+                </span> : null}
+                {this.props.global.algorithm === "meanshift" ? <span>Set Window Size
+                    <WindowSizeSlider/>
+                </span> : null}
                 <Button
                     variant='contained'
                     disabled = {this.props.global.started}

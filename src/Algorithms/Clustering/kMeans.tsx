@@ -75,6 +75,7 @@ async function kMeans() {
         return flag;
     }
     /** DISPATCHING TO THE STORE BEGINS HERE */
+    store.dispatch({type: "SET_ALGORITHM", payload: 'kmeans'})
     if (k >= points.length) {
         return
     } 

@@ -1,7 +1,14 @@
 import store from "../../reduxStore";
 
 const clusterRandom = async () => {
-    const clusterSites: number = 4
+    let clusterSites: number = 5
+    const sign: number = Math.random()
+    const diffrence: number = Math.floor(Math.random() * 3)
+    if (sign > 0.5) {
+        clusterSites += diffrence
+    } else {
+        clusterSites -= diffrence
+    }
     const clusterRadius: number = 50
     for (let i = 0; i < clusterSites; i += 1) {
         let flag = true

@@ -1,7 +1,14 @@
 import store from "../../reduxStore";
 
 const linearRandom = async () => {
-    const clusterSites: number = 4
+    let clusterSites: number = 4
+    const sign: number = Math.random()
+    const diffrence: number = Math.floor(Math.random() * 2)
+    if (sign > 0.5) {
+        clusterSites += diffrence
+    } else {
+        clusterSites -= diffrence
+    }
     const xOffset: number = 30  
     const yOffset: number = 200
     for (let i = 0; i < clusterSites; i += 1) {

@@ -1,7 +1,15 @@
 import store from "../../reduxStore";
 
 const naiveRandom = async () => {
-    for (let i = 0; i < 50; i += 1) {
+    let numberOfGeneratedPoints: number = 50
+    const sign: number = Math.random()
+    const diffrence: number = Math.floor(Math.random() * 45)
+    if (sign > 0.5) {
+        numberOfGeneratedPoints += diffrence
+    } else {
+        numberOfGeneratedPoints -= diffrence
+    }
+    for (let i = 0; i < numberOfGeneratedPoints; i += 1) {
     await new Promise((res) => setTimeout(res, 10))
     let flag:boolean = true;
     let X = 0 
