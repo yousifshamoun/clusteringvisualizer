@@ -4,6 +4,7 @@ import kMeans from "../Algorithms/Clustering/kMeans"
 import meanShift from "../Algorithms/Clustering/meanShift";
 import store from "../reduxStore";
 import RandomMenu from "./RandomMenu";
+import AlgorithmMenu from "./AlgorithmMenu";
 import SpeedController from './SpeedController';
 import { RootState } from "../reduxStore/reducers/index"
 import { connect, ConnectedProps } from 'react-redux';
@@ -26,9 +27,22 @@ const mapDispatch = {
 const connector = connect(mapState, mapDispatch)
 type PropsFromRedux = ConnectedProps<typeof connector>
 //Variables
+
 class NavBar extends React.Component<PropsFromRedux> {
     constructor(props: PropsFromRedux) {
         super(props)
+    }
+    handleStart = () => {
+        switch (this.props.global.algorithm) {
+            case "kmeans":
+                kMeans()
+                break;
+            case "meanshift":
+                meanShift()
+                break;
+            default:
+                return
+        }
     }
     public render() {
     return (
@@ -40,26 +54,25 @@ class NavBar extends React.Component<PropsFromRedux> {
         mb={2}>Clustering Visualizer</Typography> */}
         <Box sx={{ width: 1000 }}>
             <Stack direction="row" spacing={5}>
-                {this.props.global.paused ?
-                    <Button
-                        variant='contained' onClick={this.props.resume}>Resume</Button>
-                         : 
-                    <Button variant='contained' onClick={this.props.pause}>Pause</Button>}
-                <Button variant="contained"
-                    disabled = {this.props.global.started}
-                    onClick={kMeans}>kMeans</Button>
-                <Button variant="contained"
-                    disabled = {this.props.global.started}
-                    onClick={meanShift}>Mean Shift</Button>
+                <AlgorithmMenu {...this.props.global}/>
                 <RandomMenu
-                 {...this.props.global}/>
-                <SpeedController/>
+                {...this.props.global}/>
+                {this.props.global.started ? (this.props.global.paused ?
+                    <Button
+                    variant='contained' onClick={this.props.resume}>Resume</Button>
+                    : 
+                    <Button variant='contained' onClick={this.props.pause}>Pause</Button>):(<Button
+                        variant='contained'
+                        onClick={this.handleStart}
+                        disabled = {this.props.global.started}>Start
+                </Button>)}
                 {this.props.global.algorithm === "kmeans" ? <span>Set k clusters
                     <CentroidSlider/>
                 </span> : null}
                 {this.props.global.algorithm === "meanshift" ? <span>Set Window Size
                     <WindowSizeSlider/>
                 </span> : null}
+                <SpeedController/>
                 <Button
                     variant='contained'
                     disabled = {this.props.global.started}
