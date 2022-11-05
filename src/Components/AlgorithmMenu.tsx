@@ -4,9 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import store from '../reduxStore';
 import { GlobalState } from '../reduxStore/reducers/global';
-import naiveRandom from '../Algorithms/Random/naiveRandom';
-import clusterRandom from '../Algorithms/Random/clusterRandom';
-import linearRandom from '../Algorithms/Random/linearRandom';
+
 export default function AlgorithmMenu(props: GlobalState) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

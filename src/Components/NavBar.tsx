@@ -1,8 +1,7 @@
 import React from "react"
-import {AppBar, Button, Typography,Stack, Box} from '@mui/material';
+import {AppBar, Button, Stack, Box} from '@mui/material';
 import kMeans from "../Algorithms/Clustering/kMeans"
 import meanShift from "../Algorithms/Clustering/meanShift";
-import store from "../reduxStore";
 import RandomMenu from "./RandomMenu";
 import AlgorithmMenu from "./AlgorithmMenu";
 import SpeedController from './SpeedController';
@@ -27,31 +26,37 @@ const mapDispatch = {
 const connector = connect(mapState, mapDispatch)
 type PropsFromRedux = ConnectedProps<typeof connector>
 //Variables
-
-class NavBar extends React.Component<PropsFromRedux> {
+type NavBarState = {noAlgo: boolean}
+class NavBar extends React.Component<PropsFromRedux, NavBarState> {
     constructor(props: PropsFromRedux) {
-        super(props)
-    }
+        super(props);
+        this.state = {
+            noAlgo: false
+        };
+      }
     handleStart = () => {
         switch (this.props.global.algorithm) {
             case "kmeans":
                 kMeans()
+                this.setState({
+                    noAlgo: false
+                  })
                 break;
             case "meanshift":
                 meanShift()
+                this.setState({
+                    noAlgo: false
+                  })
                 break;
             default:
-                return
+                this.setState({
+                    noAlgo: true
+                  })
         }
     }
     public render() {
     return (
     <AppBar position="static">
-        {/* <Typography
-        variant="h6"
-        mt={2}
-        ml={2}
-        mb={2}>Clustering Visualizer</Typography> */}
         <Box sx={{ width: 1000 }}>
             <Stack direction="row" spacing={5}>
                 <AlgorithmMenu {...this.props.global}/>
@@ -64,7 +69,8 @@ class NavBar extends React.Component<PropsFromRedux> {
                     <Button variant='contained' onClick={this.props.pause}>Pause</Button>):(<Button
                         variant='contained'
                         onClick={this.handleStart}
-                        disabled = {this.props.global.started}>Start
+                        disabled = {this.props.global.started}>{this.state.noAlgo && !this.props.global.algorithm ?
+                         "Select an Algorithm" : this.props.global.points.length <= 2 ? "Plot points": "Visualize !"}
                 </Button>)}
                 {this.props.global.algorithm === "kmeans" ? <span>Set k clusters
                     <CentroidSlider/>

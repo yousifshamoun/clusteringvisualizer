@@ -2,7 +2,6 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import store from '../reduxStore';
 import { GlobalState } from '../reduxStore/reducers/global';
 import naiveRandom from '../Algorithms/Random/naiveRandom';
 import clusterRandom from '../Algorithms/Random/clusterRandom';
