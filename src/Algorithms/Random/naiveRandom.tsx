@@ -1,4 +1,4 @@
-import store from "../reduxStore";
+import store from "../../reduxStore";
 
 const naiveRandom = async () => {
     for (let i = 0; i < 50; i += 1) {

@@ -1,10 +1,9 @@
-import store from "../reduxStore";
-import { Point } from "../reduxStore/reducers/global";
-import getRandomColor from "../utils/getRandomColor";
-import getSquareDistance from "../utils/getSquareDistance"
+import store from "../../reduxStore";
+import { Point } from "../../reduxStore/reducers/global";
+import getRandomColor from "../../utils/getRandomColor";
+import getSquareDistance from "../../utils/getSquareDistance"
 import { v4 as uuidv4 } from 'uuid';
-import handlePause from "../utils/handlePause";
-import {GlobalState} from "../reduxStore/reducers/global"
+import handlePause from "../../utils/handlePause";
 async function kMeans() {
     /**DECLARING INSTANCE VARIABLES */
     const points: Point[] = store.getState().global.points

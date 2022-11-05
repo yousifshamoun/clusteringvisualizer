@@ -1,4 +1,4 @@
-import store from "../reduxStore";
+import store from "../../reduxStore";
 
 const linearRandom = async () => {
     const clusterSites: number = 4

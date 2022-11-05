@@ -1,6 +1,6 @@
 import React from "react"
 import {AppBar, Button, Typography,Stack, Box} from '@mui/material';
-import kMeans from "../Algorithms/kMeans" 
+import kMeans from "../Algorithms/Clustering/kMeans" 
 import store from "../reduxStore";
 import RandomMenu from "./RandomMenu";
 import SpeedController from './SpeedController';
@@ -55,6 +55,7 @@ class NavBar extends React.Component<PropsFromRedux> {
                 </span>
                 <Button
                     variant='contained'
+                    disabled = {this.props.global.started}
                     onClick = {this.props.reset}
                     >RESET
                 </Button>
