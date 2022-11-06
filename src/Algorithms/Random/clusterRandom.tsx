@@ -9,7 +9,7 @@ const clusterRandom = async () => {
     } else {
         clusterSites -= diffrence
     }
-    const clusterRadius: number = 50
+    const clusterRadius: number = 100
     for (let i = 0; i < clusterSites; i += 1) {
         let flag = true
         let X = Math.floor(Math.random() * window.innerWidth)
@@ -26,7 +26,7 @@ const clusterRandom = async () => {
         store.dispatch({type: "ADD_POINT", payload: {id: store.getState().global.max_id, coordinates: [X, Y]}})
         store.dispatch({type: "INCREMENT_MAX_ID"})
         let positive:boolean = true
-        for (let j = 0; j < 25; j += 1) {
+        for (let j = 0; j < 100; j += 1) {
             await new Promise((res) => setTimeout(res, 10))
             let cX = X
             let cY = Y

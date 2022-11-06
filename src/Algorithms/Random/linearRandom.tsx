@@ -9,8 +9,8 @@ const linearRandom = async () => {
     } else {
         clusterSites -= diffrence
     }
-    const xOffset: number = 30  
-    const yOffset: number = 200
+    const xOffset: number = 100  
+    const yOffset: number = 300
     for (let i = 0; i < clusterSites; i += 1) {
         let flag = true
         let X = Math.floor(Math.random() * window.innerWidth)
@@ -27,7 +27,7 @@ const linearRandom = async () => {
         store.dispatch({type: "ADD_POINT", payload: {id: store.getState().global.max_id, coordinates: [X, Y]}})
         store.dispatch({type: "INCREMENT_MAX_ID"})
         let positive:boolean = true
-        for (let j = 0; j < 25; j += 1) {
+        for (let j = 0; j < 100; j += 1) {
             await new Promise((res) => setTimeout(res, 10))
             let cX = X
             let cY = Y

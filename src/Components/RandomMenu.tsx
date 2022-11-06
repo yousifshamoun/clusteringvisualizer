@@ -6,11 +6,12 @@ import { GlobalState } from '../reduxStore/reducers/global';
 import naiveRandom from '../Algorithms/Random/naiveRandom';
 import clusterRandom from '../Algorithms/Random/clusterRandom';
 import linearRandom from '../Algorithms/Random/linearRandom';
+import circluarRandom from '../Algorithms/Random/circularRandom';
 export default function RandomMenu(props: GlobalState) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const options = ["Set Random", "Naive", "Cluster", "Linear"]
+  const options = ["Set Random", "Naive", "Cluster", "Linear", "Circular"]
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -31,6 +32,11 @@ export default function RandomMenu(props: GlobalState) {
     handleClose()
     setSelectedIndex(3)
     linearRandom()
+  }
+  const handleCircular = () => {
+  handleClose()
+  setSelectedIndex(4)
+  circluarRandom()
   }
 
   return (
@@ -65,6 +71,7 @@ export default function RandomMenu(props: GlobalState) {
         <MenuItem onClick={handleSlow}>Naive</MenuItem>
         <MenuItem onClick={handleMedium}>Cluster</MenuItem>
         <MenuItem onClick={handleFast}>Linear</MenuItem>
+        <MenuItem onClick={handleCircular}>Circular</MenuItem>
       </Menu>
     </div>
   );
