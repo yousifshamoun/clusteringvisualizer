@@ -6,7 +6,7 @@ const mapStateToProps = (state: RootState) => ({
     global: state.global,
 }
 )
-const mapDispathToProps = {
+const mapDispatchToProps = {
     addPoint: (point: Point) => ({
         type: "ADD_POINT",
         payload: point
@@ -15,7 +15,7 @@ const mapDispathToProps = {
         type: "INCREMENT_MAX_ID",
     })
 }
-const connector = connect(mapStateToProps, mapDispathToProps)
+const connector = connect(mapStateToProps, mapDispatchToProps)
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type IBoardProps = PropsFromRedux & {

@@ -9,6 +9,7 @@ import { RootState } from "../reduxStore/reducers/index"
 import { connect, ConnectedProps } from 'react-redux';
 import CentroidSlider from "./CentroidSlider";
 import WindowSizeSlider from "./WindowSizeSlider";
+import dbScan from "../Algorithms/Clustering/dbScan";
 const mapState = (state: RootState) => ({
     global: state.global
 })
@@ -48,6 +49,12 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
                     noAlgo: false
                   })
                 break;
+            case "dbscan":
+                  
+                  this.setState({
+                    noAlgo: false
+                  })
+                  break;
             default:
                 this.setState({
                     noAlgo: true

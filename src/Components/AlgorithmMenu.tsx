@@ -9,7 +9,7 @@ export default function AlgorithmMenu(props: GlobalState) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const options = ["Algorithms", "kMeans", "Mean Shift"]
+  const options = ["Algorithms", "kMeans", "Mean Shift", "DBSCAN"]
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -26,6 +26,12 @@ export default function AlgorithmMenu(props: GlobalState) {
     setSelectedIndex(2)
     store.dispatch({type: "SET_ALGORITHM", payload: "meanshift"})
   }
+  const handleDB = () => {
+    handleClose()
+    setSelectedIndex(3)
+    store.dispatch({type: "SET_ALGORITHM", payload: "dbscan"})
+  }
+
 
   return (
     <div>
@@ -58,6 +64,7 @@ export default function AlgorithmMenu(props: GlobalState) {
       >
         <MenuItem onClick={handleSlow}>kMeans</MenuItem>
         <MenuItem onClick={handleMedium}>Mean Shift</MenuItem>
+        <MenuItem onClick={handleDB}>DBSCAN</MenuItem>
       </Menu>
     </div>
   );
