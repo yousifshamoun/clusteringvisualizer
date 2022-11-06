@@ -31,7 +31,7 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
     constructor(props: PropsFromRedux) {
         super(props);
         this.state = {
-            noAlgo: false
+            noAlgo: true
         };
       }
     handleStart = () => {
@@ -64,12 +64,14 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
                 {...this.props.global}/>
                 {this.props.global.started ? (this.props.global.paused ?
                     <Button
-                    variant='contained' onClick={this.props.resume}>Resume</Button>
+                    variant='contained' color="secondary" onClick={this.props.resume}>Resume</Button>
                     : 
-                    <Button variant='contained' onClick={this.props.pause}>Pause</Button>):(<Button
+                    <Button color="secondary" variant='contained' onClick={this.props.pause}>Pause</Button>):(<Button
                         variant='contained'
+                        color="secondary"
                         onClick={this.handleStart}
-                        disabled = {this.props.global.started}>{this.state.noAlgo && !this.props.global.algorithm ?
+                        disabled = {this.props.global.started}>
+                            {this.state.noAlgo && !this.props.global.algorithm ?
                          "Select an Algorithm" : this.props.global.points.length <= 2 ? "Plot points": "Visualize !"}
                 </Button>)}
                 {this.props.global.algorithm === "kmeans" ? <span>Set k clusters

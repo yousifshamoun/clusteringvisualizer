@@ -17,7 +17,7 @@ const naiveRandom = async () => {
     while (flag) {
         X = Math.floor(Math.random() *(window.innerWidth - 30))
         Y = Math.floor(Math.random() * (window.innerHeight - 50))
-        if (window.innerWidth - 50 <= X || window.innerHeight - 70 <= Y || 20 >= X || 20 >= Y || !X || !Y ) {
+        if (window.innerWidth * .97 <= X || window.innerHeight * 0.87 <= Y || 20 >= X || 20 >= Y || !X || !Y ) {
             flag = true;
         } else {
             flag = false

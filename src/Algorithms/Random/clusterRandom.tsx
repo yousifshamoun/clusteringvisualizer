@@ -15,8 +15,8 @@ const clusterRandom = async () => {
         let X = Math.floor(Math.random() * window.innerWidth)
         let Y = Math.floor(Math.random() * window.innerHeight)
         while (flag) {
-            if (X > (window.innerWidth * 0.8) || X < (window.innerWidth * 0.2) ||
-            Y > (window.innerHeight * 0.8) || Y < (window.innerHeight * 0.2)) {
+            if (window.innerWidth * .97 - clusterRadius<= X || X <= 20 + clusterRadius ||
+            window.innerHeight * 0.87 - clusterRadius <= Y || Y <= 20 + clusterRadius) {
                 X = Math.floor(Math.random() * window.innerWidth)
                 Y = Math.floor(Math.random() * window.innerHeight)
             } else {
