@@ -26,7 +26,7 @@ const clusterRandom = async () => {
         store.dispatch({type: "ADD_POINT", payload: {id: store.getState().global.max_id, coordinates: [X, Y]}})
         store.dispatch({type: "INCREMENT_MAX_ID"})
         let positive:boolean = true
-        for (let j = 0; j < 100; j += 1) {
+        for (let j = 0; j < 50; j += 1) {
             await new Promise((res) => setTimeout(res, 10))
             let cX = X
             let cY = Y
@@ -39,7 +39,7 @@ const clusterRandom = async () => {
             }
             store.dispatch({type: "ADD_POINT", payload: {id: store.getState().global.max_id, coordinates: [cX, cY]}})
             store.dispatch({type: "INCREMENT_MAX_ID"})
-            positive = !positive
+            // positive = !positive
             
         }
     }

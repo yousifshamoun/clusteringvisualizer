@@ -2,7 +2,7 @@ import store from "../../reduxStore";
 
 const circluarRandom = async () => {
     const singleCircle = async (initialRadius: number) => {
-        let oX = window.innerWidth / 2 - 50
+        let oX = window.innerWidth / 2 - 50 
         let oY = window.innerHeight / 2 
         let X = oX + initialRadius 
         let Y = oY
