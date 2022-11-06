@@ -44,6 +44,6 @@ const clusterRandom = async () => {
         }
     }
 
-
+store.dispatch({type: "STOP"})
 }
 export default clusterRandom

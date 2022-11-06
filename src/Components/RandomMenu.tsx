@@ -7,6 +7,7 @@ import naiveRandom from '../Algorithms/Random/naiveRandom';
 import clusterRandom from '../Algorithms/Random/clusterRandom';
 import linearRandom from '../Algorithms/Random/linearRandom';
 import circluarRandom from '../Algorithms/Random/circularRandom';
+import store from '../reduxStore';
 export default function RandomMenu(props: GlobalState) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -21,22 +22,30 @@ export default function RandomMenu(props: GlobalState) {
   const handleSlow = () => {
     handleClose()
     setSelectedIndex(1)
+    store.dispatch({type: "START"})
     naiveRandom()
+    
   }
   const handleMedium = () => {
     handleClose()
     setSelectedIndex(2)
+    store.dispatch({type: "START"})
     clusterRandom()
+    
   }
   const handleFast = () => {
     handleClose()
     setSelectedIndex(3)
+    store.dispatch({type: "START"})
     linearRandom()
+    
   }
   const handleCircular = () => {
   handleClose()
   setSelectedIndex(4)
+  store.dispatch({type: "START"})
   circluarRandom()
+  
   }
 
   return (

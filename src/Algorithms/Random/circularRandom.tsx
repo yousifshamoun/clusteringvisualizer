@@ -34,8 +34,8 @@ for (let i = 0; i < 3; i += 1) {
     // if (skip > 0.5) {
     //     continue
     // }
-    singleCircle(initialRadius + (100*i))
+    await singleCircle(initialRadius + (100*i))
 }
-
+store.dispatch({type: "STOP"})
 }
 export default circluarRandom

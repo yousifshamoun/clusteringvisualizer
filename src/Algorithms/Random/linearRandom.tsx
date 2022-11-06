@@ -45,6 +45,6 @@ const linearRandom = async () => {
         }
     }
 
-
+store.dispatch({type: "STOP"})
 }
 export default linearRandom

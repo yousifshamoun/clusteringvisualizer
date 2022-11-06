@@ -26,5 +26,6 @@ const naiveRandom = async () => {
 store.dispatch({type: "ADD_POINT", payload: {id: store.getState().global.max_id, coordinates: [X, Y]}})
 store.dispatch({type: "INCREMENT_MAX_ID"})
 }
+store.dispatch({type: "STOP"})
 }
 export default naiveRandom
