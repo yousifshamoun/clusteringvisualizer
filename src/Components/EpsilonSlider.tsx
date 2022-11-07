@@ -7,29 +7,30 @@ const mapStateToProps = (state: RootState) => ({
 }
 )
 const mapDispathToProps = {
-    changeNumberOfCentroids: (k: number) => ({
-        type: "CHANGE_NUMBER_OF_CENTROIDS",
-        payload: k
+    changeEpsilon: (eps: number) => ({
+        type: "CHANGE_EPSILON",
+        payload: eps
     })
 }
 const connector = connect(mapStateToProps, mapDispathToProps)
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-class CentroidSlider extends React.Component<PropsFromRedux> {
+class EpsilonSlider extends React.Component<PropsFromRedux> {
     public render () {
         return (
             <Slider
             disabled = {this.props.global.started}
             valueLabelDisplay="auto"
             color="secondary"
-            min={2}
-            max={10}
-            value={this.props.global.k}
+            min={20}
+            max={100}
+            step = {5}
+            value={this.props.global.eps}
             onChange={(e, val) =>
-                this.props.changeNumberOfCentroids(val as number)
+                this.props.changeEpsilon(val as number)
             }
         />
         )
     }
 }
-export default connector(CentroidSlider)
+export default connector(EpsilonSlider)

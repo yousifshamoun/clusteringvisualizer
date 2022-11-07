@@ -24,7 +24,7 @@ export const initialState: GlobalState = {
     algorithm: "",
     k: 2,
     windowSize: 120,
-    eps: 20,
+    eps: 35,
     minPoints: 2,
     started: false,
     paused: false,
@@ -71,6 +71,10 @@ function global(state: GlobalState = initialState, action: Action) {
             return {...state, k: action.payload}
         case "CHANGE_WINDOW_SIZE":
             return {...state, windowSize: action.payload}
+        case "CHANGE_EPSILON":
+            return {...state, eps: action.payload}
+        case "CHANGE_MIN_POINTS":
+            return {...state, minPoints: action.payload}
         case "RESET":
             return initialState
         default:

@@ -10,6 +10,9 @@ import { connect, ConnectedProps } from 'react-redux';
 import CentroidSlider from "./CentroidSlider";
 import WindowSizeSlider from "./WindowSizeSlider";
 import dbScan from "../Algorithms/Clustering/dbScan";
+import EpsilonSlider from "./EpsilonSlider";
+import MinPointsSlider from "./MinPointsSlider";
+
 const mapState = (state: RootState) => ({
     global: state.global
 })
@@ -50,7 +53,7 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
                   })
                 break;
             case "dbscan":
-                  
+                  dbScan()
                   this.setState({
                     noAlgo: false
                   })
@@ -86,6 +89,12 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
                 </span> : null}
                 {this.props.global.algorithm === "meanshift" ? <span>Set Window Size
                     <WindowSizeSlider/>
+                </span> : null}
+                {this.props.global.algorithm === "dbscan" ? <span>Set Epsilon
+                    <EpsilonSlider/>
+                </span> : null}
+                {this.props.global.algorithm === "dbscan" ? <span>Set Min Points
+                    <MinPointsSlider/>
                 </span> : null}
                 <SpeedController/>
                 <Button
