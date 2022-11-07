@@ -68,7 +68,7 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
     public render() {
     return (
     <AppBar position="static">
-        <Box sx={{ width: 1200 }}>
+        <Box sx={{ width: 2000 }}>
             <Stack direction="row" spacing={5}>
                 <AlgorithmMenu {...this.props.global}/>
                 <RandomMenu
