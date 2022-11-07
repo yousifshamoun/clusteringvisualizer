@@ -1,0 +1,19 @@
+/* html {
+	overflow: auto;
+	height:100vh;
+    background: linear-gradient(90deg,#434343,black);
+    width: 100%;
+} */
+.light {
+  background-size: 80px 80px;
+  background-color: rgb(214, 214, 214);
+   background-image: linear-gradient(white .2rem, transparent .2rem),
+                     linear-gradient(90deg, white .2rem, transparent .2rem);
+}
+.dark {
+  background-size: 80px 80px;
+  background-color: rgb(31, 29, 29);
+  background-image: linear-gradient(gray .2rem, transparent .2rem),
+                    linear-gradient(90deg, gray .2rem, transparent .2rem);
+}
+

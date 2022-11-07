@@ -28,7 +28,7 @@ export const initialState: GlobalState = {
     minPoints: 2,
     started: false,
     paused: false,
-    delay: 250,
+    delay: 100,
     render_primary: [],
     render_secondary: []
 }

@@ -47,15 +47,15 @@ class Board extends React.Component<IBoardProps, BoardProps> {
         return (
             <div>
                  <svg
-                    style={{ fill: 'red' }}
+                    fill="current" 
                     width="100%"
                     height="90vh"
                     ref={this.state.bg}
                     onClick={this.handleClick}>
                         <defs>
-                        <marker id="markerArrow" markerWidth="20" markerHeight="20" refX="10" refY="6" orient="auto">
-                            <path d="M2,2 L2,11 L10,6 L2,2" fill="red" />
-                        </marker>
+                            <marker id="markerArrow" markerWidth="20" markerHeight="20" refX="10" refY="6" orient="auto">
+                                <path d="M2,2 L2,11 L10,6 L2,2" fill="red" />
+                            </marker>
                         </defs>
                         {this.props.global.points.map((o: Point) => (
                         <g

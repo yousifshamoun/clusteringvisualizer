@@ -12,6 +12,7 @@ import WindowSizeSlider from "./WindowSizeSlider";
 import dbScan from "../Algorithms/Clustering/dbScan";
 import EpsilonSlider from "./EpsilonSlider";
 import MinPointsSlider from "./MinPointsSlider";
+import DarkModeButton from "./DarkModeButton";
 
 const mapState = (state: RootState) => ({
     global: state.global
@@ -67,7 +68,7 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
     public render() {
     return (
     <AppBar position="static">
-        <Box sx={{ width: 1000 }}>
+        <Box sx={{ width: 1200 }}>
             <Stack direction="row" spacing={5}>
                 <AlgorithmMenu {...this.props.global}/>
                 <RandomMenu
@@ -103,6 +104,7 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
                     onClick = {this.props.reset}
                     >RESET
                 </Button>
+                <DarkModeButton/>
             </Stack>
         </Box>
     </AppBar>

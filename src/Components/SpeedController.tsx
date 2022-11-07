@@ -27,7 +27,7 @@ export default function SpeedController() {
   const handleFast = () => {
     handleClose()
     setSelectedIndex(3)
-    store.dispatch({type: "SET_DELAY", payload: 250})
+    store.dispatch({type: "SET_DELAY", payload: 100})
   }
 
   return (
