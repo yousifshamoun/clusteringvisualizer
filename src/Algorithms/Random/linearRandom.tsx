@@ -10,7 +10,7 @@ const linearRandom = async () => {
         clusterSites -= diffrence
     }
     const xOffset: number = window.innerWidth * 0.05
-    const yOffset: number = window.innerHeight * 0.2
+    const yOffset: number = window.innerHeight * 0.3
     for (let i = 0; i < clusterSites; i += 1) {
         let flag = true
         let X = Math.floor(Math.random() * window.innerWidth)
