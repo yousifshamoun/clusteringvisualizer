@@ -1,5 +1,5 @@
 import React from "react"
-import {AppBar, Button, Toolbar, Grid, Box} from '@mui/material';
+import {AppBar, Button, Toolbar, Grid, Box, Typography} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import kMeans from "../Algorithms/Clustering/kMeans"
 import meanShift from "../Algorithms/Clustering/meanShift";
@@ -81,6 +81,11 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
         return (
         <ThemeProvider theme = {theme}>
         <AppBar elevation={0} className="appbar" color="primary" style={{ color: 'white', minHeight: '80px' }}>
+        <Typography 
+            component="div"
+            mt = {2}
+            ml = {2}
+            ><Box sx={{ fontSize: 'h5.fontSize', fontWeight: 'bold' }}>Clustering Visualizer</Box></Typography>
         <Toolbar>
         <Grid container justifyContent="center" alignItems="center" style={{ height: '100%', position: 'relative', top: '8px' }}>
         <Grid container justifyContent="center" alignItems="center" item xs={12} md={10} xl={9}>
