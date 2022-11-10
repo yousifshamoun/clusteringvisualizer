@@ -37,7 +37,7 @@ export default function AlgorithmMenu(props: GlobalState) {
     <div>
       <Button
         id="demo-positioned-button"
-      aria-controls={open ? 'demo-positioned-menu' : undefined}
+        aria-controls={open ? 'demo-positioned-menu' : undefined} 
         aria-haspopup="true"
         disabled = {props.started}
         variant="contained"

@@ -1,5 +1,6 @@
 import React from "react"
-import {AppBar, Button, Stack, Box} from '@mui/material';
+import {AppBar, Button, Toolbar, Grid, Box} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import kMeans from "../Algorithms/Clustering/kMeans"
 import meanShift from "../Algorithms/Clustering/meanShift";
 import RandomMenu from "./RandomMenu";
@@ -14,6 +15,17 @@ import EpsilonSlider from "./EpsilonSlider";
 import MinPointsSlider from "./MinPointsSlider";
 import DarkModeButton from "./DarkModeButton";
 
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#34495E',
+      },
+      secondary : {
+        main: "#1ABC9C",
+        contrastText: '#fff',
+      }
+    },
+  });
 const mapState = (state: RootState) => ({
     global: state.global
 })
@@ -66,14 +78,19 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
         }
     }
     public render() {
-    return (
-    <AppBar position="static">
-        <Box sx={{ width: 2000 }}>
-            <Stack direction="row" spacing={5}>
+        return (
+        <ThemeProvider theme = {theme}>
+        <AppBar elevation={0} className="appbar" color="primary" style={{ color: 'white', minHeight: '80px' }}>
+        <Toolbar>
+        <Grid container justifyContent="center" alignItems="center" style={{ height: '100%', position: 'relative', top: '8px' }}>
+        <Grid container justifyContent="center" alignItems="center" item xs={12} md={10} xl={9}>
                 <AlgorithmMenu {...this.props.global}/>
+                <Box
+                ml="20px">
                 <RandomMenu
-                {...this.props.global}/>
-                {this.props.global.started ? (this.props.global.paused ?
+                {...this.props.global}/></Box>
+                <Box
+                ml="20px">{this.props.global.started ? (this.props.global.paused ?
                     <Button
                     variant='contained' color="secondary" onClick={this.props.resume}>Resume</Button>
                     : 
@@ -84,30 +101,38 @@ class NavBar extends React.Component<PropsFromRedux, NavBarState> {
                         disabled = {this.props.global.started}>
                             {this.state.noAlgo && !this.props.global.algorithm ?
                          "Select an Algorithm" : this.props.global.points.length <= 2 ? "Plot points": "Visualize !"}
-                </Button>)}
+                </Button>)}</Box>
                 {this.props.global.algorithm === "kmeans" ? <span>Set k clusters
-                    <CentroidSlider/>
+                <Box
+                ml="20px"><CentroidSlider/></Box>
                 </span> : null}
-                {this.props.global.algorithm === "meanshift" ? <span>Set Window Size
-                    <WindowSizeSlider/>
+               {this.props.global.algorithm === "meanshift" ? <span>Set Window Size
+               <Box
+                ml="20px"><WindowSizeSlider/></Box>
                 </span> : null}
-                {this.props.global.algorithm === "dbscan" ? <span>Set Epsilon
-                    <EpsilonSlider/>
+              {this.props.global.algorithm === "dbscan" ? <span>Set Epsilon
+                <Box
+                ml="20px"><EpsilonSlider/></Box>
                 </span> : null}
                 {this.props.global.algorithm === "dbscan" ? <span>Set Min Points
-                    <MinPointsSlider/>
+                <Box
+                ml="20px"><MinPointsSlider/></Box>
                 </span> : null}
-                <SpeedController/>
-                <Button
-                    variant='contained'
-                    disabled = {this.props.global.started}
-                    onClick = {this.props.reset}
-                    >RESET
-                </Button>
-                <DarkModeButton/>
-            </Stack>
-        </Box>
+                <Box ml="20px"><SpeedController/></Box>
+                <Box
+                ml="20px"><Button
+                variant='contained'
+                disabled = {this.props.global.started}
+                onClick = {this.props.reset}
+                >RESET
+                </Button></Box>
+                <Box
+                ml="20px"><DarkModeButton/></Box>   
+        </Grid>
+        </Grid>
+        </Toolbar>
     </AppBar>
+    </ThemeProvider>
     )
 }
 }

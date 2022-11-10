@@ -19,21 +19,21 @@ export default function RandomMenu(props: GlobalState) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleSlow = () => {
+  const handleNaive = () => {
     handleClose()
     setSelectedIndex(1)
     store.dispatch({type: "START"})
     naiveRandom()
     
   }
-  const handleMedium = () => {
+  const handleCluster = () => {
     handleClose()
     setSelectedIndex(2)
     store.dispatch({type: "START"})
     clusterRandom()
     
   }
-  const handleFast = () => {
+  const handleLinear = () => {
     handleClose()
     setSelectedIndex(3)
     store.dispatch({type: "START"})
@@ -52,7 +52,7 @@ export default function RandomMenu(props: GlobalState) {
     <div>
       <Button
         id="demo-positioned-button"
-      aria-controls={open ? 'demo-positioned-menu' : undefined}
+        aria-controls={open ? 'demo-positioned-menu' : undefined}
         aria-haspopup="true"
         disabled = {props.started}
         variant="contained"
@@ -77,9 +77,9 @@ export default function RandomMenu(props: GlobalState) {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handleSlow}>Naive</MenuItem>
-        <MenuItem onClick={handleMedium}>Cluster</MenuItem>
-        <MenuItem onClick={handleFast}>Linear</MenuItem>
+        <MenuItem onClick={handleNaive}>Naive</MenuItem>
+        <MenuItem onClick={handleCluster}>Cluster</MenuItem>
+        <MenuItem onClick={handleLinear}>Linear</MenuItem>
         <MenuItem onClick={handleCircular}>Circular</MenuItem>
       </Menu>
     </div>
